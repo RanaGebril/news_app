@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:news_app/newsDataResponse.dart';
 import 'package:news_app/sources_response.dart';
 
 class ApiManager {
@@ -25,5 +26,16 @@ class ApiManager {
 
     return sourcesResponse;
 
+  }
+
+  static Future<NewsDataResponse> getNews(String sourceID)async{
+   Uri url=Uri.https("newsapi.org","v2/everything",{
+     "sources": sourceID,
+     "apiKey":"b378dc12fefa43f58b1726e3bf2dfb44"
+   });
+
+   http.Response response=await http.get(url);
+   var json=jsonDecode(response.body);
+   return NewsDataResponse.fromJson(json);
   }
 }

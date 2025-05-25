@@ -12,7 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-   int selectedTabIndex=1;
+   int selectedTabIndex=0;
+   List<Sources> sources=[];
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
 
-                  List<Sources>? sources=snapshot.data?.sources??[];
+                  sources=snapshot.data?.sources??[];
 
                    return DefaultTabController(
                      initialIndex: 1,
-                       length: sources.length,
+                       length: sources!.length,
                        child: TabBar(
                          isScrollable: true,
                            onTap: (index) {
@@ -72,15 +73,47 @@ class _HomeScreenState extends State<HomeScreen> {
                            },
                            dividerColor: Colors.transparent,
                            indicatorColor: Colors.transparent,
-                           tabs: sources.map((source) => TabItem(
+                           tabs: sources!.map((source) => TabItem(
                                source: source,
                                // elmentAt take index ,return object
                                // source from the list = source from the map ? true--> selected
                                // بقارن obj ال جاى من list ب obj ال انا فيه فى map دلوقتى
-                               isSelected: sources.elementAt(selectedTabIndex)==source)).toList()
+                               isSelected: sources!.elementAt(selectedTabIndex)==source)).toList()
                                           ));
                 },
-            )
+            ),
+            sources.isNotEmpty?
+            FutureBuilder(
+              future: ApiManager.getNews(sources[selectedTabIndex].id??" "),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState==ConnectionState.waiting){
+                  return Center(
+                    child: CircularProgressIndicator(
+
+                    ),
+                  );
+                }
+                if(snapshot.hasError){
+                  return Center(
+                    child: Text("error"),
+                  );
+                }
+
+                var articles=snapshot.data?.articles??[];
+                return Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return Text(articles[index].title??"");
+                      },
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: articles.length),
+                );
+
+              },
+
+            ):
+                Container()
+
           ],
         ),
       ),

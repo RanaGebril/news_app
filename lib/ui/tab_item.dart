@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/sources_response.dart';
+import 'package:news_app/App_colors.dart';
+import 'package:news_app/App_theme_data.dart';
+import 'package:news_app/models/sources_response.dart';
 
 class TabItem extends StatelessWidget {
   Sources source;
@@ -12,17 +14,19 @@ class TabItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
       decoration: BoxDecoration(
-        color: isSelected?Colors.green:Colors.transparent,
+        color: isSelected?AppColors.green_color:Colors.transparent,
          borderRadius: BorderRadius.circular(25),
          border: Border.all(
-           color: Colors.green
+           color: AppColors.green_color
          )
 
       ),
       child: Text(source.name??"",
-      style: TextStyle(
-        color: isSelected?Colors.white:Colors.green
-      ),),
+      style:
+      AppThemeData.light_theme.textTheme.labelMedium?.copyWith(
+          color: isSelected?AppColors.white_color:AppColors.green_color
+      ),
+      ),
     );
   }
 }

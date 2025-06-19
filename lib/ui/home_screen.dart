@@ -28,11 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text("News"),
           iconTheme: AppThemeData.light_theme.appBarTheme.iconTheme,
         ),
-        drawer: DrawerWidget(),
+        drawer: DrawerWidget(onClick: onDrawerSelect),
         body:
-            categoryModel == null
-                ? CategoriesTab(onClick: onCategorySelect)
-                : NewsUi(cat_id: categoryModel?.id??"",),
+        categoryModel == null
+            ? CategoriesTab(onClick: onCategorySelect)
+            : NewsUi(cat_id: categoryModel?.id??"",),
       ),
     );
   }
@@ -42,5 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
   onCategorySelect(category) {
     categoryModel = category;
     setState(() {});
+  }
+
+  // if the categoryModel = null it will back to categories screen
+  onDrawerSelect(id){
+    if(id== DrawerWidget.category_id)
+    {
+      categoryModel = null;
+      Navigator.pop(context);
+    }else if(id==DrawerWidget.seting_id){
+
+    }
+    setState(() {
+
+    });
   }
 }

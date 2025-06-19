@@ -25,6 +25,10 @@ class AppThemeData {
         size: 35,
       ),    )
       ,
+    iconTheme: IconThemeData(
+      color: AppColors.black_color,
+      size: 30
+    ),
 
     textTheme: TextTheme(
       titleLarge: GoogleFonts.poppins(
@@ -56,6 +60,11 @@ class AppThemeData {
         fontWeight: FontWeight.w400,
         color: AppColors.white_color
       ),
+      displayLarge: GoogleFonts.poppins(
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        color: AppColors.black_color
+      )
     )
   );
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/App_colors.dart';
 import 'package:news_app/App_theme_data.dart';
+import 'package:news_app/bloc/cubit.dart';
+import 'package:news_app/bloc/states.dart';
 import 'package:news_app/models/category_model.dart';
 import 'package:news_app/ui/categories_tab.dart';
 import 'package:news_app/ui/drawer_widget.dart';
@@ -17,44 +20,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage("assets/images/pattern.png")),
-        color: AppColors.white_color,
-      ),
+    return BlocProvider(
+      create: (context) => HomeCubit(),
+      child: BlocConsumer<HomeCubit, HomeStates>(
+        listener: (context, state) {
 
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("News"),
-          iconTheme: AppThemeData.light_theme.appBarTheme.iconTheme,
-        ),
-        drawer: DrawerWidget(onClick: onDrawerSelect),
-        body:
-        categoryModel == null
-            ? CategoriesTab(onClick: onCategorySelect)
-            : NewsUi(cat_id: categoryModel?.id??"",),
-      ),
+        },
+        builder: (context, state) {
+          return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/images/pattern.png")),
+                  color: AppColors.white_color,
+                ),
+
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text("News"),
+                    iconTheme: AppThemeData.light_theme.appBarTheme.iconTheme,
+                  ),
+                  drawer: DrawerWidget(),
+                  body:
+                  HomeCubit.get(context).categoryModel == null
+                      ? CategoriesTab(onClick:  HomeCubit.get(context).onCategorySelect)
+                      : NewsUi(cat_id:  HomeCubit.get(context).categoryModel?.id??"",),
+                ),
+              );
+        },
+    )
     );
   }
 
-  // when click on the category the categoryModel=categorySelected so go to home
-  CategoryModel? categoryModel;
-  onCategorySelect(category) {
-    categoryModel = category;
-    setState(() {});
-  }
-
-  // if the categoryModel = null it will back to categories screen
-  onDrawerSelect(id){
-    if(id== DrawerWidget.category_id)
-    {
-      categoryModel = null;
-      Navigator.pop(context);
-    }else if(id==DrawerWidget.seting_id){
-
-    }
-    setState(() {
-
-    });
-  }
 }

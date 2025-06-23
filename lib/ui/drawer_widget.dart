@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/App_colors.dart';
 import 'package:news_app/App_theme_data.dart';
+import '../bloc/cubit.dart';
 
 class DrawerWidget extends StatelessWidget {
-  Function onClick;
-   DrawerWidget({required this.onClick,super.key});
+   DrawerWidget({super.key});
 
    static const int category_id=1;
   static const int seting_id=1;
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<HomeCubit>();
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       color: AppColors.white_color,
@@ -34,7 +36,7 @@ class DrawerWidget extends StatelessWidget {
                 Icon(Icons.view_list),
                 SizedBox(width: 5),
                 GestureDetector(
-                  onTap: () => onClick(category_id),
+                  onTap: () => cubit.onDrawerSelect(category_id, context),
                   child: Text(
                     "Categories",
                     style: AppThemeData.light_theme.textTheme.displayLarge,
@@ -47,7 +49,7 @@ class DrawerWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(12),
             child: GestureDetector(
-              onTap: () => onClick(seting_id),
+              onTap: () => cubit.onDrawerSelect(seting_id, context),
               child: Row(
                 children: [
                   Icon(Icons.settings),

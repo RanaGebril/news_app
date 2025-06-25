@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_app/App_theme_data.dart';
+import 'package:news_app/ui/details_screen.dart';
 import 'package:news_app/ui/home_screen.dart';
 import 'bloc/observer.dart';
 
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeScreen.route_name,
       routes: {
         HomeScreen.route_name : (context) => HomeScreen(),
-        // CategoriesTab.route_name : (context) => CategoriesTab()
+        DetailsScreen.route_name : (context) => DetailsScreen()
       },
     );
   }

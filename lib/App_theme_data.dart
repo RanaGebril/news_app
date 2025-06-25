@@ -22,7 +22,7 @@ class AppThemeData {
       centerTitle: true,
       iconTheme: IconThemeData(
         color: AppColors.white_color,
-        size: 35,
+        size: 27,
       ),    )
       ,
     iconTheme: IconThemeData(

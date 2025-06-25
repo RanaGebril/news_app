@@ -3,7 +3,7 @@
 
 class SourcesResponse {
   SourcesResponse({
-      this.status, 
+      this.status,
       this.sources,});
 
   SourcesResponse.fromJson(dynamic json) {
@@ -22,6 +22,15 @@ SourcesResponse copyWith({  String? status,
 }) => SourcesResponse(  status: status ?? this.status,
   sources: sources ?? this.sources,
 );
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['status'] = status;
+    if (sources != null) {
+      map['sources'] = sources?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+
 }
 
 /// id : "abc-news"
@@ -34,12 +43,12 @@ SourcesResponse copyWith({  String? status,
 
 class Sources {
   Sources({
-      this.id, 
-      this.name, 
-      this.description, 
-      this.url, 
-      this.category, 
-      this.language, 
+      this.id,
+      this.name,
+      this.description,
+      this.url,
+      this.category,
+      this.language,
       this.country,});
 
   Sources.fromJson(dynamic json) {
@@ -73,4 +82,16 @@ Sources copyWith({  String? id,
   language: language ?? this.language,
   country: country ?? this.country,
 );
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['description'] = description;
+    map['url'] = url;
+    map['category'] = category;
+    map['language'] = language;
+    map['country'] = country;
+    return map;
+  }
+
 }

@@ -1,13 +1,34 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_app/App_theme_data.dart';
-import 'package:news_app/ui/categories_tab.dart';
 import 'package:news_app/ui/home_screen.dart';
-
 import 'bloc/observer.dart';
 
-void main() {
+bool isConnected=true;
+void main() async{
   Bloc.observer = Observer();
+  WidgetsFlutterBinding.ensureInitialized();
+  // isConnected= await InternetConnectionChecker().hasConnection;
+  // final connectionChecker = InternetConnectionChecker.instance;
+  final connectionChecker =await InternetConnectionChecker.instance;
+  isConnected = await connectionChecker.hasConnection;
+  print('📡 Internet connection: $isConnected');
+
+
+  final subscription = connectionChecker.onStatusChange.listen(
+        (InternetConnectionStatus status) {
+      if (status == InternetConnectionStatus.connected) {
+        isConnected=true;
+        print('Connected to the internet');
+      } else {
+        isConnected=false;
+        print('Disconnected from the internet');
+      }
+    },
+  );
+
+
   runApp(const MyApp());
 }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/App_theme_data.dart';
-import 'package:news_app/models/newsDataResponse.dart';
+import 'package:news_app/main.dart';
+
+import '../models/NewsDataResponse.dart';
+
 
 class NewsItem extends StatelessWidget {
   Articles artilcle;
@@ -25,11 +28,13 @@ class NewsItem extends StatelessWidget {
                fit: BoxFit.cover,
                height: 200,
                width: double.infinity,
+
              ):
              Image.network(artilcle.urlToImage??"",
                height: 200,
                width: double.infinity,
                fit: BoxFit.cover,
+               errorBuilder: (context, error, stackTrace) => Image.asset("assets/images/news.png"),
              ),
            ),
            SizedBox(

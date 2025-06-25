@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:news_app/bloc/cubit.dart';
+import 'package:news_app/main.dart';
+import 'package:news_app/repo/home_local_impl.dart';
+import 'package:news_app/repo/home_remote_impl.dart';
 import 'package:news_app/ui/tab_item.dart';
 import '../bloc/states.dart';
 import 'news_item.dart';
@@ -14,7 +17,9 @@ class NewsUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: BlocProvider(
-        create: (context) => HomeCubit()..getSources(cat_id),
+        create: (context) => HomeCubit(
+          isConnected?HomeRemoteImpl():HomeLocalImpl()
+        )..getSources(cat_id),
         child: BlocConsumer<HomeCubit, HomeStates>(
           listener: (context, state) {
             if (state is SourcesLoadingState || state is NewsLoadingState) {
@@ -23,30 +28,30 @@ class NewsUi extends StatelessWidget {
               context.loaderOverlay.hide();
             }
 
-            if (state is NewsErrorState){
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text("Error"),
-                      content: Text("something went wrong"),
+            // if (state is NewsErrorState){
+            //   showDialog(
+            //       context: context,
+            //       builder: (context) {
+            //         return AlertDialog(
+            //           title: Text("Error"),
+            //           content: Text("something went wrong"),
+            //
+            //         );
+            //       },);
+            // }
 
-                    );
-                  },);
-            }
-
-            if (state is SourcesErrorState){
-
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Error"),
-                    content: Text("something went wrong"),
-
-                  );
-                },);
-            }
+            // if (state is SourcesErrorState){
+            //
+            //   showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return AlertDialog(
+            //         title: Text("Error"),
+            //         content: Text("something went wrong"),
+            //
+            //       );
+            //     },);
+            // }
             // to change news when tap on new source
             if (state is ChangeSource) {
               HomeCubit.get(context).getNews(

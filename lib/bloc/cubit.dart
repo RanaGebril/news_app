@@ -7,7 +7,6 @@ import 'package:news_app/bloc/states.dart';
 import 'package:news_app/repo/home_repo.dart';
 import '../models/NewsDataResponse.dart' show NewsDataResponse;
 import '../models/category_model.dart';
-
 import '../models/sourcesResponse.dart';
 import '../ui/drawer_widget.dart';
 import '../utils/constants.dart';
@@ -20,6 +19,10 @@ class HomeCubit extends Cubit<HomeStates>{
   NewsDataResponse? newsDataResponse;
   int selectedTabIndex = 0;
   List<Sources> sources = [];
+  int page=1;
+  int pageSize =5;
+  bool isLoading = false;
+
 
   static HomeCubit get(context)=>BlocProvider.of<HomeCubit>(context);
 
@@ -33,6 +36,7 @@ class HomeCubit extends Cubit<HomeStates>{
       getNews(sourcesResponse!.sources![selectedTabIndex].id??"");
     }
     catch(e){
+      print(e.toString());
       emit(SourcesErrorState());
       
     }
@@ -46,7 +50,7 @@ class HomeCubit extends Cubit<HomeStates>{
    Future<void> getNews(String sourceID)async{
     try{
       emit(NewsLoadingState());
-      newsDataResponse = await homeRepo.getNews(sourceID);
+      newsDataResponse = await homeRepo.getNews(sourceID,pageSize,page);
       emit(NewsSuccessState());
     }
     catch(e){
@@ -71,6 +75,28 @@ class HomeCubit extends Cubit<HomeStates>{
     }else if(id==DrawerWidget.seting_id){
 
     }
+  }
+
+  Future<void> loadNewNews() async {
+    isLoading=true;
+    page++;
+    print(page);
+    try {
+      // get more data
+      final newResponse = await homeRepo.getNews(
+        sources[selectedTabIndex].id ?? "",
+        pageSize,
+        page,
+      );
+
+      // add to the old news
+      newsDataResponse?.articles?.addAll(newResponse.articles ?? []);
+
+      emit(NewsSuccessState());
+    } catch (e) {
+      emit(NewsErrorState());
+    }
+    isLoading=false;
   }
 
 }

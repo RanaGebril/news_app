@@ -16,6 +16,3 @@ class NewsSuccessState extends HomeStates{}
 class ChangeSource extends HomeStates{}
 
 class CategorySelectState extends HomeStates{}
-
-
-

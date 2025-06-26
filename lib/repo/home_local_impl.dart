@@ -6,7 +6,7 @@ import '../models/sourcesResponse.dart';
 
 class HomeLocalImpl implements HomeRepo{
   @override
-  Future<NewsDataResponse> getNews(String sourceID) async{
+  Future<NewsDataResponse> getNews(String sourceID,int? pageSize,int? page) async{
    NewsDataResponse response=await CashNews.getNews(sourceID);
    return response;
   }

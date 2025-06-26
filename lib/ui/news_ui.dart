@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:news_app/App_colors.dart';
 import 'package:news_app/bloc/cubit.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/repo/home_local_impl.dart';
@@ -9,9 +10,17 @@ import 'package:news_app/ui/tab_item.dart';
 import '../bloc/states.dart';
 import 'news_item.dart';
 
-class NewsUi extends StatelessWidget {
+class NewsUi extends StatefulWidget {
   String cat_id;
+
   NewsUi({required this.cat_id, super.key});
+
+  @override
+  State<NewsUi> createState() => _NewsUiState();
+}
+
+class _NewsUiState extends State<NewsUi> {
+  ScrollController scrollController=ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +28,7 @@ class NewsUi extends StatelessWidget {
       child: BlocProvider(
         create: (context) => HomeCubit(
           isConnected?HomeRemoteImpl():HomeLocalImpl()
-        )..getSources(cat_id),
+        )..getSources(widget.cat_id),
         child: BlocConsumer<HomeCubit, HomeStates>(
           listener: (context, state) {
             if (state is SourcesLoadingState || state is NewsLoadingState) {
@@ -40,18 +49,18 @@ class NewsUi extends StatelessWidget {
             //       },);
             // }
 
-            // if (state is SourcesErrorState){
-            //
-            //   showDialog(
-            //     context: context,
-            //     builder: (context) {
-            //       return AlertDialog(
-            //         title: Text("Error"),
-            //         content: Text("something went wrong"),
-            //
-            //       );
-            //     },);
-            // }
+            if (state is SourcesErrorState){
+
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text("something went wrong"),
+
+                  );
+                },);
+            }
             // to change news when tap on new source
             if (state is ChangeSource) {
               HomeCubit.get(context).getNews(
@@ -62,6 +71,15 @@ class NewsUi extends StatelessWidget {
                     "",
               );
             }
+
+            scrollController.addListener(() {
+              if (scrollController.position.pixels ==
+                  scrollController.position.maxScrollExtent) {
+                if(HomeCubit.get(context).isLoading == false)
+                HomeCubit.get(context).loadNewNews();
+              }
+            });
+
           },
           builder: (context, state) {
             return Column(
@@ -95,15 +113,25 @@ class NewsUi extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final articles = HomeCubit.get(context).newsDataResponse?.articles;
-                      if (articles == null || articles.isEmpty) {
-                        return Center(child: SizedBox());
-                      }
-                      return NewsItem(artilcle: articles[index]);
+                  child: RefreshIndicator(
+                    color: AppColors.green_color,
+                    onRefresh: () async {
+                      HomeCubit.get(context).page = 1;
+                      await HomeCubit.get(context).getNews(
+                          HomeCubit.get(context).sources[HomeCubit.get(context).selectedTabIndex].id ?? ""
+                      );
                     },
-                    itemCount: HomeCubit.get(context).newsDataResponse?.articles?.length ?? 0,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        final articles = HomeCubit.get(context).newsDataResponse?.articles;
+                        if (articles == null || articles.isEmpty) {
+                          return Center(child: SizedBox());
+                        }
+                        return NewsItem(artilcle: articles[index]);
+                      },
+                      itemCount: HomeCubit.get(context).newsDataResponse?.articles?.length ?? 0,
+                      controller: scrollController,
+                    ),
                   ),
                 ),
               ],

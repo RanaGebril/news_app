@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/App_theme_data.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/ui/details_screen.dart';
 
+import '../bloc/cubit.dart';
 import '../models/NewsDataResponse.dart';
 
 
@@ -15,8 +17,17 @@ class NewsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, DetailsScreen.route_name,
-        arguments: artilcle);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+              value: HomeCubit.get(context),
+              child: DetailsScreen(),
+            ),
+            settings: RouteSettings(arguments: artilcle),
+          ),
+        );
+
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),

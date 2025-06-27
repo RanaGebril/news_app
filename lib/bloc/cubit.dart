@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/bloc/states.dart';
+import 'package:news_app/main.dart';
 import 'package:news_app/repo/home_repo.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/NewsDataResponse.dart' show NewsDataResponse;
 import '../models/category_model.dart';
 import '../models/sourcesResponse.dart';
@@ -99,4 +101,13 @@ class HomeCubit extends Cubit<HomeStates>{
     isLoading=false;
   }
 
+   Future<void> launchNewsUrl(String url) async {
+     final Uri newsUrl = Uri.parse(url);
+     emit(LaunchUrlSuccessState());
+    if (!await launchUrl(newsUrl) || !isConnected) {
+      emit(LaunchUrlErrorState());
+      throw Exception('Could not launch $url');
+
+    }
+  }
 }

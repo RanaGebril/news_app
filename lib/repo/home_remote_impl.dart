@@ -9,53 +9,68 @@ import '../utils/constants.dart';
 
 class HomeRemoteImpl implements HomeRepo {
   @override
-  Future<NewsDataResponse> getNews(String sourceID,int? pageSize,int? page) async {
+  Future<NewsDataResponse> getNews(
+    String sourceID,
+    int? pageSize,
+    int? page,
+  ) async {
+    Uri url = Uri.https(Constants.authority, "v2/everything", {
+      "sources": sourceID,
+      "apiKey": Constants.apiKey,
+      "pageSize": pageSize.toString(),
+      "page": page.toString(),
+    });
 
-      Uri url = Uri.https(Constants.authority, "v2/everything", {
-        "sources": sourceID,
-        "apiKey": Constants.apiKey,
-        "pageSize":pageSize.toString(),
-        "page":page.toString()
-      });
+    http.Response response = await http.get(url);
+    var json = jsonDecode(response.body);
 
-      http.Response response = await http.get(url);
-      var json = jsonDecode(response.body);
+    NewsDataResponse newsResponse = NewsDataResponse.fromJson(json);
 
-      NewsDataResponse newsResponse = NewsDataResponse.fromJson(json);
+    // cash news
+    await CashNews.saveNews(newsResponse, sourceID);
 
-      // cash news
-      await CashNews.saveNews(newsResponse, sourceID);
-
-      return newsResponse;
-
+    return newsResponse;
   }
-
 
   @override
   Future<SourcesResponse> getSources(String categoryId) async {
+    //       protocol authority       //unencodedpath           //parameters
+    Uri url = Uri.https(Constants.authority, "/v2/top-headlines/sources", {
+      "apiKey": Constants.apiKey,
+      "category": categoryId,
+    });
 
-      //       protocol authority       //unencodedpath           //parameters
-      Uri url = Uri.https(Constants.authority, "/v2/top-headlines/sources", {
-        "apiKey": Constants.apiKey,
-        "category": categoryId,
-      });
+    //fetch data from api
+    http.Response response = await http.get(url);
 
-      //fetch data from api
-      http.Response response = await http.get(url);
+    // but data comes as string
+    var data = response.body;
 
-      // but data comes as string
-      var data = response.body;
+    // format to json it gives map
+    var json = jsonDecode(data);
 
-      // format to json it gives map
-      var json = jsonDecode(data);
+    SourcesResponse sourcesResponse = SourcesResponse.fromJson(json);
 
-      SourcesResponse sourcesResponse = SourcesResponse.fromJson(json);
+    // cash data when the app opened
+    CashSources.save(sourcesResponse);
 
-      // cash data when the app opened
-      CashSources.save(sourcesResponse);
+    // from json to model
+    return sourcesResponse;
+  }
 
-      // from json to model
-      return sourcesResponse;
+  Future<NewsDataResponse> getNewsByKeyword(String keyword) async {
+    final url = Uri.parse(
+      "https://newsapi.org/v2/everything?"
+      "q=$keyword"
+      "&apiKey=${Constants.apiKey}",
+    );
 
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return NewsDataResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to load news by keyword");
+    }
   }
 }

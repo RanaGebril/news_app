@@ -110,4 +110,16 @@ class HomeCubit extends Cubit<HomeStates>{
 
     }
   }
+
+  Future<void> getNewsByKeyword(String keyword) async {
+    try {
+      // emit(NewsLoadingState());
+      newsDataResponse = await homeRepo.getNewsByKeyword(keyword);
+      emit(NewsSuccessState());
+    } catch (e) {
+      emit(NewsErrorState());
+    }
+  }
+
+
 }

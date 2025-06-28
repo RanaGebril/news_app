@@ -1,9 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_app/App_theme_data.dart';
+import 'package:news_app/repo/home_local_impl.dart';
+import 'package:news_app/repo/home_remote_impl.dart';
 import 'package:news_app/ui/details_screen.dart';
 import 'package:news_app/ui/home_screen.dart';
+import 'bloc/cubit.dart';
 import 'bloc/observer.dart';
 
 bool isConnected=true;
@@ -30,7 +34,11 @@ void main() async{
   );
 
 
-  runApp(const MyApp());
+  runApp(  BlocProvider(
+    create: (context) => HomeCubit(isConnected ? HomeRemoteImpl() : HomeLocalImpl()),
+    child: const MyApp(),
+  ),
+  );
 }
 
 class MyApp extends StatelessWidget {

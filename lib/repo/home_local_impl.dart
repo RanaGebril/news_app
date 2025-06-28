@@ -16,4 +16,10 @@ class HomeLocalImpl implements HomeRepo{
     SourcesResponse response = await CashSources.get();
     return response;
   }
+
+  @override
+  Future<NewsDataResponse> getNewsByKeyword(String keyword) {
+    // TODO: implement getNewsByKeyword
+    throw UnimplementedError();
+  }
 }

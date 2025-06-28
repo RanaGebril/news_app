@@ -9,15 +9,13 @@ import '../utils/constants.dart';
 
 class HomeRemoteImpl implements HomeRepo {
   @override
-  Future<NewsDataResponse> getNews(String sourceID,
-      {int? pageSize, int? page, String? quary}) async {
+  Future<NewsDataResponse> getNews(String sourceID,int? pageSize,int? page) async {
 
       Uri url = Uri.https(Constants.authority, "v2/everything", {
         "sources": sourceID,
         "apiKey": Constants.apiKey,
         "pageSize":pageSize.toString(),
-        "page":page.toString(),
-        "q":quary
+        "page":page.toString()
       });
 
       http.Response response = await http.get(url);

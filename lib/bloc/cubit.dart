@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:news_app/bloc/states.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/repo/home_repo.dart';
@@ -9,6 +11,7 @@ import '../models/NewsDataResponse.dart' show NewsDataResponse;
 import '../models/category_model.dart';
 import '../models/sourcesResponse.dart';
 import '../ui/drawer_widget.dart';
+import '../utils/constants.dart';
 
 class HomeCubit extends Cubit<HomeStates>{
   HomeRepo homeRepo;
@@ -49,7 +52,7 @@ class HomeCubit extends Cubit<HomeStates>{
    Future<void> getNews(String sourceID)async{
     try{
       emit(NewsLoadingState());
-      newsDataResponse = await homeRepo.getNews(sourceID,pageSize: pageSize,page: page);
+      newsDataResponse = await homeRepo.getNews(sourceID,pageSize,page);
       emit(NewsSuccessState());
     }
     catch(e){
@@ -84,8 +87,8 @@ class HomeCubit extends Cubit<HomeStates>{
       // get more data
       final newResponse = await homeRepo.getNews(
         sources[selectedTabIndex].id ?? "",
-        pageSize: pageSize,
-        page: page,
+        pageSize,
+        page,
       );
 
       // add to the old news
@@ -107,20 +110,4 @@ class HomeCubit extends Cubit<HomeStates>{
 
     }
   }
-
-  Future<void> searchNews(String query) async {
-    emit(NewsLoadingState());
-    try {
-      newsDataResponse = await homeRepo.getNews(
-        sources[selectedTabIndex].id ?? "",
-        pageSize: pageSize,
-        page: 1,
-        quary: query,
-      );
-      emit(NewsSuccessState());
-    } catch (e) {
-      emit(NewsErrorState());
-    }
-  }
-
 }

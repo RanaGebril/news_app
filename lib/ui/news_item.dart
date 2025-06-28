@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/App_colors.dart';
 import 'package:news_app/App_theme_data.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/ui/details_screen.dart';
@@ -48,14 +46,6 @@ class NewsItem extends StatelessWidget {
                  width: double.infinity,
 
                ):
-               // CachedNetworkImage(
-               //   imageUrl: artilcle.urlToImage.toString(),
-               //   // fit: BoxFit.cover,
-               //   // width: double.infinity,
-               //   errorWidget: (context, url, error) => Image.asset("assets/images/news.png"),
-               //   placeholder: (context, url) => CircularProgressIndicator(color: AppColors.green_color)),
-               // ),
-
                Image.network(artilcle.urlToImage??"",
                  height: 200,
                  width: double.infinity,

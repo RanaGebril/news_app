@@ -1,17 +1,17 @@
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:news_app/bloc/states.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/repo/home_repo.dart';
+import 'package:news_app/setting_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/NewsDataResponse.dart' show NewsDataResponse;
 import '../models/category_model.dart';
 import '../models/sourcesResponse.dart';
+import '../ui/categories_tab.dart';
 import '../ui/drawer_widget.dart';
-import '../utils/constants.dart';
+
 
 class HomeCubit extends Cubit<HomeStates>{
   HomeRepo homeRepo;
@@ -75,7 +75,7 @@ class HomeCubit extends Cubit<HomeStates>{
       Navigator.pop(context);
       emit(CategorySelectState());
     }else if(id==DrawerWidget.seting_id){
-
+      Navigator.pushNamed(context, SettingScreen.route_name);
     }
   }
 

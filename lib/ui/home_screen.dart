@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/App_colors.dart';
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text("News"),
+                  title: Text("news".tr()),
                   actions: [
                     IconButton(onPressed: () {
                        showSearch(context: context, delegate:NewsSearchDelegate() );

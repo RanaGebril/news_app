@@ -8,7 +8,7 @@ class DrawerWidget extends StatelessWidget {
    DrawerWidget({super.key});
 
    static const int category_id=1;
-  static const int seting_id=1;
+  static const int seting_id=2;
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<HomeCubit>();

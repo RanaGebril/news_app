@@ -68,14 +68,19 @@ class HomeCubit extends Cubit<HomeStates>{
   }
 
   // if the categoryModel = null it will back to categories screen
-  onDrawerSelect(id,BuildContext context){
-    if(id== DrawerWidget.category_id)
-    {
+  onDrawerSelect(id, BuildContext context) {
+    if (id == DrawerWidget.category_id) {
       categoryModel = null;
       Navigator.pop(context);
       emit(CategorySelectState());
-    }else if(id==DrawerWidget.seting_id){
-      Navigator.pushNamed(context, SettingScreen.route_name);
+    } else if (id == DrawerWidget.seting_id) {
+      Navigator.pop(context);
+
+      //SettingScreen
+      final currentRoute = ModalRoute.of(context)?.settings.name;
+      if (currentRoute != SettingScreen.route_name) {
+        Navigator.pushNamed(context, SettingScreen.route_name);
+      }
     }
   }
 

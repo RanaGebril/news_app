@@ -9,6 +9,7 @@ import 'package:news_app/repo/home_remote_impl.dart';
 import 'package:news_app/ui/setting_screen.dart';
 import 'package:news_app/ui/details_screen.dart';
 import 'package:news_app/ui/home_screen.dart';
+import 'ui/aplash.dart';
 import 'bloc/cubit.dart';
 import 'bloc/observer.dart';
 
@@ -58,12 +59,12 @@ class MyApp extends StatelessWidget {
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       theme: AppThemeData.light_theme,
-      initialRoute: HomeScreen.route_name,
+      initialRoute: SplashScreen.route_name,
       routes: {
         HomeScreen.route_name: (context) => HomeScreen(),
         DetailsScreen.route_name: (context) => DetailsScreen(),
         SettingScreen.route_name: (context) => SettingScreen(),
-        // CategoriesTab.route_name : (context) => CategoriesTab(),
+        SplashScreen.route_name : (context) => SplashScreen(),
       },
     );
   }

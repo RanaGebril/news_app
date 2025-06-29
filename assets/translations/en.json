@@ -1,8 +1,9 @@
 {
   "news": "News",
   "setting": "Setting",
-  "category": "Categories",
+  "categories": "Categories",
   "selectLanguage": "Select Language",
   "english": "English",
-  "arabic" : "Arabic"
+  "arabic" : "Arabic",
+  "newsApp!": "News App!"
 }

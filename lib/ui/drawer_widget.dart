@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/App_colors.dart';
@@ -23,7 +24,7 @@ class DrawerWidget extends StatelessWidget {
             height: 120,
             child: Center(
               child: Text(
-                "News App!",
+                "newsApp!".tr(),
                 style: AppThemeData.light_theme.textTheme.displayLarge
                     ?.copyWith(color: AppColors.white_color),
               ),
@@ -38,7 +39,7 @@ class DrawerWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () => cubit.onDrawerSelect(category_id, context),
                   child: Text(
-                    "Categories",
+                    "categories".tr(),
                     style: AppThemeData.light_theme.textTheme.displayLarge,
                   ),
                 ),
@@ -55,7 +56,7 @@ class DrawerWidget extends StatelessWidget {
                   Icon(Icons.settings),
                   SizedBox(width: 5),
                   Text(
-                    "Setting",
+                    "setting".tr(),
                     style: AppThemeData.light_theme.textTheme.displayLarge,
                   ),
                 ],

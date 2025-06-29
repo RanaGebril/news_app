@@ -1,8 +1,11 @@
 {
   "news": "الأخبار",
-  "setting": "الأعدادات",
-  "category": "الفئات",
+  "setting": "الإعدادات",
+  "categories": "الفئات",
   "selectLanguage": "أختر اللغه",
   "english": "الأنجليزيه",
-  "arabic" : "العربيه"
+  "arabic" : "العربيه",
+  "newsApp!": "الأخبار"
+
+
 }

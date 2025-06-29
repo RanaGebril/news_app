@@ -6,7 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_app/App_theme_data.dart';
 import 'package:news_app/repo/home_local_impl.dart';
 import 'package:news_app/repo/home_remote_impl.dart';
-import 'package:news_app/setting_screen.dart';
+import 'package:news_app/ui/setting_screen.dart';
 import 'package:news_app/ui/details_screen.dart';
 import 'package:news_app/ui/home_screen.dart';
 import 'bloc/cubit.dart';

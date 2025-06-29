@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/ui/drawer_widget.dart';
-import '../App_colors.dart';
-import '../App_theme_data.dart';
+import '../../App_colors.dart';
+import '../../App_theme_data.dart';
 
 class SettingScreen extends StatefulWidget {
   static const String route_name = "setting";
@@ -39,7 +39,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SizedBox(height: 12),
               DropdownButtonFormField<Locale>(
-                value: Locale("en"),
+                value: context.locale,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   filled: true,
@@ -56,8 +56,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 dropdownColor: AppColors.white_color,
                 items:  [
-                  DropdownMenuItem(value: Locale("en"), child: Text("english".tr())),
-                  DropdownMenuItem(value: Locale("ar"), child: Text("arabic".tr())),
+                  DropdownMenuItem(value: Locale("en"), child: Text("english".tr(),
+                      style: AppThemeData.light_theme.textTheme.titleLarge)),
+                  DropdownMenuItem(value: Locale("ar"), child: Text("arabic".tr(),
+                      style: AppThemeData.light_theme.textTheme.titleLarge)),
                 ],
                 onChanged: (value) {
                   if (value != null) {

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:news_app/App_colors.dart';
 
 class CategoryModel {
@@ -21,43 +22,43 @@ class CategoryModel {
     return [
       CategoryModel(
         category_color: AppColors.red_color,
-        label: "Sports",
+        label: "sports".tr(),
         image: "assets/images/ball.png",
         id: "sports",
       ),
       CategoryModel(
         category_color: AppColors.blue_color,
-        label: "General",
+        label: "general".tr(),
         image: "assets/images/general.png",
         id: "general",
       ),
       CategoryModel(
         category_color: AppColors.pink_color,
-        label: "Health",
+        label: "health".tr(),
         image: "assets/images/health.png",
         id: "health",
       ),
       CategoryModel(
         category_color: AppColors.orange_color,
-        label: "Business",
+        label: "business".tr(),
         image: "assets/images/bussines.png",
         id: "business",
       ),
       CategoryModel(
         category_color: AppColors.sky_blue_color,
-        label: "Environment",
+        label: "environment".tr(),
         image: "assets/images/environment.png",
         id: "technology",
       ),
       CategoryModel(
         category_color: AppColors.yellow_color,
-        label: "Science",
+        label: "science".tr(),
         image: "assets/images/science.png",
         id: "science",
       ),
       CategoryModel(
         category_color: AppColors.light_purble_color,
-        label: "Entertainment",
+        label: "entertainment".tr(),
         image: "assets/images/theater.png",
         id: "entertainment",
       ),

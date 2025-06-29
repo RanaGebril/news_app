@@ -5,5 +5,18 @@
   "selectLanguage": "Select Language",
   "english": "English",
   "arabic" : "Arabic",
-  "newsApp!": "News App!"
+  "newsApp!": "News App!",
+  "selectCat": "Pick your category of interest",
+  "sports": "Sports",
+  "general" : "General",
+  "health" : "Health",
+  "business" : "Business",
+  "environment" : "Environment",
+  "science": "Science",
+  "entertainment": "Entertainment",
+  "viewFullArticle" : "View Full Article",
+  "error": "Error",
+  "wrong": "something went wrong"
+
+
 }

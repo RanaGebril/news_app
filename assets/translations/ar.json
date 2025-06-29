@@ -1,11 +1,20 @@
 {
-  "news": "الأخبار",
+  "news": "أخبار",
   "setting": "الإعدادات",
   "categories": "الفئات",
-  "selectLanguage": "أختر اللغه",
-  "english": "الأنجليزيه",
-  "arabic" : "العربيه",
-  "newsApp!": "الأخبار"
-
-
+  "selectLanguage": "اختر اللغة",
+  "english": "الإنجليزية",
+  "arabic": "العربية",
+  "newsApp!": "تطبيق الأخبار!",
+  "selectCat": "اختر الفئة التي تهمك",
+  "sports": "رياضة",
+  "general": "عام",
+  "health": "صحة",
+  "business": "أعمال",
+  "environment": "بيئة",
+  "science": "علوم",
+  "entertainment": "ترفيه",
+  "viewFullArticle": "عرض المقال كاملاً",
+  "error": "خطأ",
+  "wrong": "حدث خطأ ما"
 }

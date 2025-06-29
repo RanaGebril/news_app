@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -55,8 +56,8 @@ class _NewsUiState extends State<NewsUi> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text("Error"),
-                    content: Text("something went wrong"),
+                    title: Text("error".tr()),
+                    content: Text("wrong".tr()),
 
                   );
                 },);

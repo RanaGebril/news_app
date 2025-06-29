@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/bloc/states.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/repo/home_repo.dart';
-import 'package:news_app/setting_screen.dart';
+import 'package:news_app/ui/setting_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/NewsDataResponse.dart' show NewsDataResponse;
 import '../models/category_model.dart';

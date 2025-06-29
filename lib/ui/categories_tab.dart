@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/App_theme_data.dart';
 import 'package:news_app/models/category_model.dart';
@@ -16,7 +17,7 @@ class CategoriesTab extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Pick your category of interest",
+            "selectCat".tr(),
             style: AppThemeData.light_theme.textTheme.labelLarge,
           ),
           SizedBox(height: 8),
